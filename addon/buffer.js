@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import BufferedProxy from 'ember-buffered-proxy/proxy';
 
 const { keys } = Object;
@@ -13,7 +12,6 @@ const {
   A,
   Object: EmberObject
 } = Ember;
-const { Model } = DS;
 
 export default BufferedProxy.extend(Evented, {
   unsetApiErrors() {},
@@ -22,19 +20,19 @@ export default BufferedProxy.extend(Evented, {
     this._super(...arguments);
 
     let content = this.get('content');
-    if (content instanceof Model) {
-      content.on('didCommit', () => this._clearApiErrorBlacklist());
-      content.on('becameInvalid', () => this._clearApiErrorBlacklist());
-    }
+    // if (content instanceof Model) {
+    //   content.on('didCommit', () => this._clearApiErrorBlacklist());
+    //   content.on('becameInvalid', () => this._clearApiErrorBlacklist());
+    // }
   },
 
   apiErrors: computed('content.errors.[]', function() {
     let content = this.get('content');
-    if (content instanceof Model) {
-      return content.get('errors');
-    } else {
+    // if (content instanceof Model) {
+    //   return content.get('errors');
+    // } else {
       return [];
-    }
+    // }
   }),
 
   clientErrors: computed('validations.errors.[]', function() {
